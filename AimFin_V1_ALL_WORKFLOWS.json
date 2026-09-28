@@ -1,0 +1,3140 @@
+[
+  {
+    "id": "da87636aa511d875",
+    "name": "AimFin · Intake · Gmail",
+    "active": false,
+    "nodes": [
+      {
+        "id": "3a650431-2e4e-5d9b-a2af-e238bae67ffd",
+        "name": "AimFin · Intake · Gmail · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          160
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 15
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "703922ed-e4bb-5d68-a1f2-1e934da41ffd",
+        "name": "AimFin · Intake · Gmail · Plan Intake",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          440,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/poll/gmail",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Intake · Gmail · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Intake · Gmail · Plan Intake",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "c4e6bc907ca58202",
+    "name": "AimFin · Intake · WAHA",
+    "active": false,
+    "nodes": [
+      {
+        "id": "65237e95-edf3-59fb-a930-2b6d73710b28",
+        "name": "AimFin · Intake · WAHA · Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          160
+        ],
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "aimfin-waha",
+          "authentication": "headerAuth",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_WAHA_WEBHOOK_CREDENTIAL"
+          }
+        },
+        "webhookId": "13ebb34b-68c4-5b33-812f-a353be733b78"
+      },
+      {
+        "id": "bfb7b6d5-b132-5a86-8bb6-6568f5094c2c",
+        "name": "AimFin · Intake · WAHA · Authorize and Persist",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          440,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/intake/waha",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ $json.body }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Intake · WAHA · Webhook": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Intake · WAHA · Authorize and Persist",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "f8cc0c2bd4220e67",
+    "name": "AimFin · Intake · Drive",
+    "active": false,
+    "nodes": [
+      {
+        "id": "3a650431-2e4e-5d9b-a2af-e238bae67ffd",
+        "name": "AimFin · Intake · Drive · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          160
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 15
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "fe6eff18-2860-5e19-a32b-f41b8b980a7d",
+        "name": "AimFin · Intake · Drive · Plan Intake",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          440,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/poll/drive",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Intake · Drive · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Intake · Drive · Plan Intake",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "a438e6f51fddad3a",
+    "name": "AimFin · Orchestrator",
+    "active": false,
+    "nodes": [
+      {
+        "id": "7973da7b-1d14-5a57-b9fb-c316e5bddc1d",
+        "name": "AimFin · Orchestrator · Queue",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          360
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 3
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "fed94aba-90f6-571a-9452-441076b394cb",
+        "name": "AimFin · Orchestrator · Classify",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1020,
+          360
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/tick/intake",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "e38bf110-a9c4-5aeb-8ca0-6f7ac666ff46",
+        "name": "AimFin · Orchestrator · DB Check",
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          340,
+          360
+        ],
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT current_database() AS database, to_regclass('aimfin.jobs') IS NOT NULL AND to_regclass('aimfin.operation_attempts') IS NOT NULL AS schema_ready, NOT rolsuper AND NOT rolbypassrls AS restricted_role FROM pg_roles WHERE rolname=current_user",
+          "options": {}
+        },
+        "credentials": {
+          "postgres": {
+            "id": null,
+            "name": "AIMFIN_POSTGRES_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "30c253db-c459-5884-970f-4e8a658874d3",
+        "name": "AimFin · Orchestrator · DB Guard",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          360
+        ],
+        "parameters": {
+          "jsCode": "if (!$json.schema_ready || !$json.restricted_role) throw new Error('AimFin database migration or restricted credential is missing'); return $input.all();"
+        }
+      },
+      {
+        "id": "97bf0a9d-dc15-5193-af05-4427cc48f445",
+        "name": "AimFin · Orchestrator · Supplier",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          1480,
+          0
+        ],
+        "parameters": {
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "value": "969571542f4320cd",
+            "mode": "id"
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": false
+          }
+        }
+      },
+      {
+        "id": "1a93dcef-1397-5a9e-915a-a6da138490c2",
+        "name": "AimFin · Orchestrator · Sales",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          1480,
+          240
+        ],
+        "parameters": {
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "value": "f27900d79f035700",
+            "mode": "id"
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": false
+          }
+        }
+      },
+      {
+        "id": "a3a39ca4-ab53-5338-83d0-03733f618b96",
+        "name": "AimFin · Orchestrator · Expense",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          1480,
+          480
+        ],
+        "parameters": {
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "value": "1ecbd66d672a5c25",
+            "mode": "id"
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": false
+          }
+        }
+      },
+      {
+        "id": "f1707697-9b99-527d-a121-0d8e718935ba",
+        "name": "AimFin · Orchestrator · Transfer",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          1480,
+          720
+        ],
+        "parameters": {
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "value": "ea52c184713c09e0",
+            "mode": "id"
+          },
+          "mode": "once",
+          "options": {
+            "waitForSubWorkflow": false
+          }
+        }
+      },
+      {
+        "id": "74b8fec5-4302-5f9e-91c4-515ee10c7dc6",
+        "name": "Guide · Orchestration",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          80
+        ],
+        "parameters": {
+          "content": "## ORCHESTRATION\nDatabase readiness precedes intake classification and branch ticks.",
+          "height": 140,
+          "width": 620,
+          "color": 5
+        }
+      },
+      {
+        "id": "269f5191-6d03-533e-80c7-8ef35740d249",
+        "name": "Guide · Branch calls",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1380,
+          -220
+        ],
+        "parameters": {
+          "content": "## ASYNC BRANCH TICKS\nChildren launch without waiting. Independent branch clocks provide recovery; PostgreSQL caps and leases bound work.",
+          "height": 140,
+          "width": 460,
+          "color": 5
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Orchestrator · Queue": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Orchestrator · DB Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Orchestrator · DB Check": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Orchestrator · DB Guard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Orchestrator · DB Guard": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Orchestrator · Classify",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Orchestrator · Classify": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Orchestrator · Supplier",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "AimFin · Orchestrator · Sales",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "AimFin · Orchestrator · Expense",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "AimFin · Orchestrator · Transfer",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "969571542f4320cd",
+    "name": "AimFin · Branch · Supplier",
+    "active": false,
+    "nodes": [
+      {
+        "id": "428e18b1-d716-5d27-82de-0a67c067cd24",
+        "name": "AimFin · Supplier · Input",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "inputSource": "passthrough"
+        }
+      },
+      {
+        "id": "787a565f-4ae8-542d-8698-3041c22bfcd1",
+        "name": "AimFin · Supplier · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          320
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 5
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "8a874192-762c-5f8e-9a58-29f21c721c28",
+        "name": "AimFin · Supplier · Guarded Advance",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          500,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/tick/supplier",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Supplier · Input": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Supplier · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Supplier · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Supplier · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "f27900d79f035700",
+    "name": "AimFin · Branch · Sales",
+    "active": false,
+    "nodes": [
+      {
+        "id": "428e18b1-d716-5d27-82de-0a67c067cd24",
+        "name": "AimFin · Sales · Input",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "inputSource": "passthrough"
+        }
+      },
+      {
+        "id": "787a565f-4ae8-542d-8698-3041c22bfcd1",
+        "name": "AimFin · Sales · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          320
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 5
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "8837bbb4-2018-5a51-8b11-159681a48937",
+        "name": "AimFin · Sales · Guarded Advance",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          500,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/tick/sales",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Sales · Input": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sales · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sales · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sales · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "1ecbd66d672a5c25",
+    "name": "AimFin · Branch · Expense",
+    "active": false,
+    "nodes": [
+      {
+        "id": "428e18b1-d716-5d27-82de-0a67c067cd24",
+        "name": "AimFin · Expense · Input",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "inputSource": "passthrough"
+        }
+      },
+      {
+        "id": "787a565f-4ae8-542d-8698-3041c22bfcd1",
+        "name": "AimFin · Expense · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          320
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 5
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "6f34d68d-5742-5d97-a003-74752bb50e5f",
+        "name": "AimFin · Expense · Guarded Advance",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          500,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/tick/expense",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Expense · Input": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Expense · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Expense · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Expense · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "ea52c184713c09e0",
+    "name": "AimFin · Branch · Transfer",
+    "active": false,
+    "nodes": [
+      {
+        "id": "428e18b1-d716-5d27-82de-0a67c067cd24",
+        "name": "AimFin · Transfer · Input",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "inputSource": "passthrough"
+        }
+      },
+      {
+        "id": "787a565f-4ae8-542d-8698-3041c22bfcd1",
+        "name": "AimFin · Transfer · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          320
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 5
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "5f8ecdaf-e473-5789-8baf-7a6aee7761e4",
+        "name": "AimFin · Transfer · Guarded Advance",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          500,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/tick/transfer",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Transfer · Input": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Transfer · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Transfer · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Transfer · Guarded Advance",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "3f1b6c9e1eb52090",
+    "name": "AimFin · Worker · Groq",
+    "active": false,
+    "nodes": [
+      {
+        "id": "94f6af4e-9955-5485-b61e-6a623bb7c872",
+        "name": "AimFin · Groq · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          160
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 2
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3c8bf21c-3893-5fb1-8539-954570c39f20",
+        "name": "AimFin · Groq · Claim",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          340,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/claim/groq",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "af8feee5-4acb-5a86-b1c5-790b9d2a2ecf",
+        "name": "AimFin · Groq · Provider Guard",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          160
+        ],
+        "parameters": {
+          "jsCode": "if ($json.idle) return [];\nconst o={...$json};\nconst origin=\"https://api.groq.com\";\nif(typeof o.url!=='string' || /[\\s\\\\\\\\]/.test(o.url) || !o.url.startsWith(origin+'/') || o.url.includes('#')) throw new Error('Provider destination denied');\nif(!o.operation_id || !o.lease) throw new Error('Operation identity missing');\nconst path=o.url.slice(origin.length);\nif(o.method!=='POST' || o.url!==origin+'/openai/v1/chat/completions' || o.binary || o.upload_pdf || o.body?.model!=='openai/gpt-oss-120b' || o.body?.response_format?.type!=='json_schema' || o.body?.response_format?.json_schema?.strict!==true) throw new Error('Groq contract denied');\nreturn [{json:o}];"
+        }
+      },
+      {
+        "id": "7b20029a-7265-566a-93f2-159e82829b44",
+        "name": "AimFin · Groq · JSON Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1020,
+          160
+        ],
+        "parameters": {
+          "method": "={{ $json.method }}",
+          "url": "={{ $json.url }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "groqApi",
+          "options": {
+            "timeout": 90000,
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            },
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "sendBody": "={{ $json.body !== null && $json.body !== undefined }}",
+          "specifyBody": "json",
+          "jsonBody": "={{ $json.body || {} }}"
+        },
+        "credentials": {
+          "groqApi": {
+            "id": null,
+            "name": "AIMFIN_GROQ_CREDENTIAL"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "017ec8d1-7dab-5f19-8fa1-5cdeb4d4fac7",
+        "name": "AimFin · Groq · Normalize JSON",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1440,
+          160
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Groq · Claim').first().json;\nconst r=$input.first();\nlet status=Number(r.json.statusCode || 0);\nlet body=r.json.body ?? r.json;\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "a09fefcc-29fa-5ba3-a950-78a9e6d3446f",
+        "name": "AimFin · Groq · Transport Failure",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1440,
+          480
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Groq · Claim').first().json;\nconst e=$json.error ?? $json;\nconst raw=e?.httpCode ?? e?.statusCode ?? e?.status ?? e?.context?.httpCode;\nlet status=/^[1-5][0-9]{2}$/.test(String(raw)) ? Number(raw) : 0;\nconst message=typeof e==='string' ? e : String(e?.message || '');\n// Older native Sheets returns only n8n's canonical error message. Unknown stays ambiguous.\nif(!status && /^Authorization failed - please check your credentials/.test(message)) status=401;\nif(!status && /^Forbidden - perhaps check your credentials/.test(message)) status=403;\nif(!status && /^The service is receiving too many requests from you/.test(message)) status=429;\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body:{transport_error:true}}}];"
+        }
+      },
+      {
+        "id": "16b142d2-3625-57b4-8498-ba119108d704",
+        "name": "AimFin · Groq · Persist Result",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1900,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/result",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ $json }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "128397ce-0074-572b-b963-0336fb067661",
+        "name": "Guide · Claim and guard",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          -110
+        ],
+        "parameters": {
+          "content": "## CLAIM + GUARD\nOne leased operation per tick. Idle queues stop safely.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "5012cca4-cf5f-5ace-9f6c-1a77db0fa0f8",
+        "name": "Guide · Transport recovery",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1400,
+          700
+        ],
+        "parameters": {
+          "content": "## RECOVERY\nThe core decides retries; unknown sends are held.",
+          "height": 140,
+          "width": 480,
+          "color": 3
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Groq · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Groq · Claim",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Groq · Claim": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Groq · Provider Guard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Groq · Provider Guard": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Groq · JSON Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Groq · JSON Request": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Groq · Normalize JSON",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Groq · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Groq · Normalize JSON": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Groq · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Groq · Transport Failure": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Groq · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "ce082448bac6386d",
+    "name": "AimFin · Worker · Sheets",
+    "active": false,
+    "nodes": [
+      {
+        "id": "94f6af4e-9955-5485-b61e-6a623bb7c872",
+        "name": "AimFin · Sheets · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          320
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 2
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3c8bf21c-3893-5fb1-8539-954570c39f20",
+        "name": "AimFin · Sheets · Claim",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          340,
+          320
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/claim/sheets",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "af8feee5-4acb-5a86-b1c5-790b9d2a2ecf",
+        "name": "AimFin · Sheets · Provider Guard",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          320
+        ],
+        "parameters": {
+          "jsCode": "if ($json.idle) return [];\nconst o={...$json};\nconst origin=\"https://sheets.googleapis.com\";\nif(typeof o.url!=='string' || /[\\s\\\\\\\\]/.test(o.url) || !o.url.startsWith(origin+'/') || o.url.includes('#')) throw new Error('Provider destination denied');\nif(!o.operation_id || !o.lease) throw new Error('Operation identity missing');\nconst path=o.url.slice(origin.length);\nif(o.binary || o.upload_pdf) throw new Error('Sheets mode denied');\nconst m=path.match(/^\\/v4\\/spreadsheets\\/([A-Za-z0-9_-]+)(?:\\/values\\/([^?]+)\\?([^#]+)|\\?fields=[^#]+)$/);\nif(!m) throw new Error('Sheets destination denied');\no.sheet_id=m[1];\nif(m[2]){\n  o.range=decodeURIComponent(m[2]);\n  if(!/^'[^!\\r\\n]+'!A[1-9][0-9]*:[A-Z]+[1-9][0-9]*$/.test(o.range)) throw new Error('Sheets range denied');\n  if(o.method==='PUT' && m[3]==='valueInputOption=RAW' && Array.isArray(o.body?.values) && o.body.values.length===1 && Array.isArray(o.body.values[0])) { o.adapter='update'; o.values=o.body.values; }\n  else if(o.method==='GET' && m[3]==='valueRenderOption=UNFORMATTED_VALUE') o.adapter='read';\n  else throw new Error('Sheets operation denied');\n} else { if(o.method!=='GET') throw new Error('Sheets metadata denied'); o.adapter='metadata'; }\nreturn [{json:o}];"
+        }
+      },
+      {
+        "id": "602753ef-8334-5cd0-acfd-2fd7fc13029b",
+        "name": "AimFin · Sheets · Request Mode",
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          1020,
+          320
+        ],
+        "parameters": {
+          "mode": "expression",
+          "numberOutputs": 3,
+          "output": "={{ $json.adapter === 'read' ? 1 : ($json.adapter === 'update' ? 2 : 0) }}"
+        }
+      },
+      {
+        "id": "7b20029a-7265-566a-93f2-159e82829b44",
+        "name": "AimFin · Sheets · JSON Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1480,
+          0
+        ],
+        "parameters": {
+          "method": "={{ $json.method }}",
+          "url": "={{ $json.url }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleSheetsOAuth2Api",
+          "options": {
+            "timeout": 90000,
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            },
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "sendBody": "={{ $json.body !== null && $json.body !== undefined }}",
+          "specifyBody": "json",
+          "jsonBody": "={{ $json.body || {} }}"
+        },
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": null,
+            "name": "AIMFIN_GOOGLE_SHEETS_OAUTH"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "017ec8d1-7dab-5f19-8fa1-5cdeb4d4fac7",
+        "name": "AimFin · Sheets · Normalize JSON",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          0
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Sheets · Claim').first().json;\nconst r=$input.first();\nlet status=Number(r.json.statusCode || 0);\nlet body=r.json.body ?? r.json;\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "d211b57a-ad61-50a3-a52a-76a5a47a5308",
+        "name": "AimFin · Sheets · Read Reserved Range",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 2,
+        "position": [
+          1480,
+          320
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "read",
+          "sheetId": "={{ $json.sheet_id }}",
+          "range": "={{ $json.range }}",
+          "rawData": true,
+          "dataProperty": "values",
+          "options": {
+            "valueRenderMode": "UNFORMATTED_VALUE",
+            "continue": true
+          }
+        },
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": null,
+            "name": "AIMFIN_GOOGLE_SHEETS_OAUTH"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "8d03d9e9-ae80-595e-99d9-fee6a9f9b89c",
+        "name": "AimFin · Sheets · Normalize Readback",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          320
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Sheets · Claim').first().json;\nconst r=$input.first();\nif(r.json.error) throw new Error('Native error reached success lane');\nlet status=200;\nlet body=r.json;\nbody={values:r.json.values || []};\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "a2435150-f431-5746-82bf-1262f7ce90a8",
+        "name": "AimFin · Sheets · Write Reserved Range",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 2,
+        "position": [
+          1480,
+          640
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "sheet",
+          "operation": "update",
+          "sheetId": "={{ $json.sheet_id }}",
+          "range": "={{ $json.range }}",
+          "rawData": true,
+          "dataProperty": "values",
+          "options": {
+            "valueInputMode": "RAW"
+          }
+        },
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": null,
+            "name": "AIMFIN_GOOGLE_SHEETS_OAUTH"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "09625067-3efb-5cc1-a33f-0496ea13a656",
+        "name": "AimFin · Sheets · Normalize Write",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          640
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Sheets · Claim').first().json;\nconst r=$input.first();\nif(r.json.error) throw new Error('Native error reached success lane');\nlet status=200;\nlet body=r.json;\nbody={acknowledged:true}; // Actual range readback, not this acknowledgement, authorizes advancement.\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "a09fefcc-29fa-5ba3-a950-78a9e6d3446f",
+        "name": "AimFin · Sheets · Transport Failure",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1900,
+          980
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Sheets · Claim').first().json;\nconst e=$json.error ?? $json;\nconst raw=e?.httpCode ?? e?.statusCode ?? e?.status ?? e?.context?.httpCode;\nlet status=/^[1-5][0-9]{2}$/.test(String(raw)) ? Number(raw) : 0;\nconst message=typeof e==='string' ? e : String(e?.message || '');\n// Older native Sheets returns only n8n's canonical error message. Unknown stays ambiguous.\nif(!status && /^Authorization failed - please check your credentials/.test(message)) status=401;\nif(!status && /^Forbidden - perhaps check your credentials/.test(message)) status=403;\nif(!status && /^The service is receiving too many requests from you/.test(message)) status=429;\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body:{transport_error:true}}}];"
+        }
+      },
+      {
+        "id": "16b142d2-3625-57b4-8498-ba119108d704",
+        "name": "AimFin · Sheets · Persist Result",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2580,
+          320
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/result",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ $json }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "42e0e59b-07e8-5ead-8275-ba38e1fbce3c",
+        "name": "Guide · Claim and guard",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          20
+        ],
+        "parameters": {
+          "content": "## CLAIM + GUARD\nLease one durable operation. An idle queue ends this tick safely.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "450a6387-cd48-59be-90b2-f47cf7b9f9b0",
+        "name": "Guide · Provider modes",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1220,
+          -220
+        ],
+        "parameters": {
+          "content": "## SHEETS OPERATIONS\nMetadata check / native RAW read / native fixed-range write.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "62c052d8-e724-5909-abef-462643dbac1d",
+        "name": "Guide · Transport recovery",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1840,
+          1180
+        ],
+        "parameters": {
+          "content": "## TRANSPORT RECOVERY\nUnknown outcomes return to the core for controlled reconciliation.",
+          "height": 140,
+          "width": 440,
+          "color": 3
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Sheets · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Claim",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Claim": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Provider Guard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Provider Guard": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Request Mode",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Request Mode": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · JSON Request",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Sheets · Read Reserved Range",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Sheets · Write Reserved Range",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · JSON Request": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Normalize JSON",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Sheets · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Normalize JSON": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Read Reserved Range": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Normalize Readback",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Sheets · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Normalize Readback": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Write Reserved Range": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Normalize Write",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Sheets · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Normalize Write": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Sheets · Transport Failure": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Sheets · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "07bbce7a5a437b4d",
+    "name": "AimFin · Worker · Drive",
+    "active": false,
+    "nodes": [
+      {
+        "id": "94f6af4e-9955-5485-b61e-6a623bb7c872",
+        "name": "AimFin · Drive · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          320
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 2
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3c8bf21c-3893-5fb1-8539-954570c39f20",
+        "name": "AimFin · Drive · Claim",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          340,
+          320
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/claim/drive",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "af8feee5-4acb-5a86-b1c5-790b9d2a2ecf",
+        "name": "AimFin · Drive · Provider Guard",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          320
+        ],
+        "parameters": {
+          "jsCode": "if ($json.idle) return [];\nconst o={...$json};\nconst origin=\"https://www.googleapis.com\";\nif(typeof o.url!=='string' || /[\\s\\\\\\\\]/.test(o.url) || !o.url.startsWith(origin+'/') || o.url.includes('#')) throw new Error('Provider destination denied');\nif(!o.operation_id || !o.lease) throw new Error('Operation identity missing');\nconst path=o.url.slice(origin.length);\nif(o.binary){\n const m=path.match(/^\\/drive\\/v3\\/files\\/([A-Za-z0-9_-]+)(?:\\?alt=media|\\/export\\?mimeType=application%2Fpdf)$/);\n if(o.method!=='GET' || !m || o.upload_pdf) throw new Error('Drive download denied'); o.file_id=m[1];\n} else if(o.upload_pdf){\n const m=path.match(/^\\/upload\\/drive\\/v3\\/files\\/([A-Za-z0-9_-]+)\\?uploadType=media$/);\n if(o.method!=='PATCH' || !m || typeof o.body?.data!=='string') throw new Error('Drive update denied'); o.file_id=m[1];\n} else if(!(o.method==='GET' && /^\\/drive\\/v3\\/files(?:\\?|\\/generateIds\\?|\\/[A-Za-z0-9_-]+(?:\\/permissions)?\\?)/.test(path) || o.method==='POST' && path==='/drive/v3/files?fields=id,webViewLink' && /^[A-Za-z0-9_-]+$/.test(o.body?.id || '') && o.body?.mimeType==='application/pdf' && Array.isArray(o.body?.parents) && o.body.parents.length===1)) throw new Error('Drive metadata contract denied');\nreturn [{json:o}];"
+        }
+      },
+      {
+        "id": "602753ef-8334-5cd0-acfd-2fd7fc13029b",
+        "name": "AimFin · Drive · Request Mode",
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          1020,
+          320
+        ],
+        "parameters": {
+          "mode": "expression",
+          "numberOutputs": 3,
+          "output": "={{ $json.binary ? 1 : ($json.upload_pdf ? 2 : 0) }}"
+        }
+      },
+      {
+        "id": "7b20029a-7265-566a-93f2-159e82829b44",
+        "name": "AimFin · Drive · JSON Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1480,
+          0
+        ],
+        "parameters": {
+          "method": "={{ $json.method }}",
+          "url": "={{ $json.url }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleDriveOAuth2Api",
+          "options": {
+            "timeout": 90000,
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            },
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "sendBody": "={{ $json.body !== null && $json.body !== undefined }}",
+          "specifyBody": "json",
+          "jsonBody": "={{ $json.body || {} }}"
+        },
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": null,
+            "name": "AIMFIN_GOOGLE_DRIVE_OAUTH"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "017ec8d1-7dab-5f19-8fa1-5cdeb4d4fac7",
+        "name": "AimFin · Drive · Normalize JSON",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          0
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Drive · Claim').first().json;\nconst r=$input.first();\nlet status=Number(r.json.statusCode || 0);\nlet body=r.json.body ?? r.json;\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "edbb5792-335a-5056-a6da-aa9e6bb39b1e",
+        "name": "AimFin · Drive · Download",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1480,
+          320
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "file",
+          "operation": "download",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.file_id }}",
+            "mode": "id"
+          },
+          "options": {
+            "binaryPropertyName": "data",
+            "googleFileConversion": {
+              "conversion": {
+                "docsToFormat": "application/pdf",
+                "sheetsToFormat": "application/pdf",
+                "slidesToFormat": "application/pdf",
+                "drawingsToFormat": "application/pdf"
+              }
+            }
+          }
+        },
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": null,
+            "name": "AIMFIN_GOOGLE_DRIVE_OAUTH"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "8d03d9e9-ae80-595e-99d9-fee6a9f9b89c",
+        "name": "AimFin · Drive · Normalize Download",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          320
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Drive · Claim').first().json;\nconst r=$input.first();\nif(r.json.error) throw new Error('Native error reached success lane');\nlet status=200;\nlet body=r.json;\nif(status>=200 && status<300){ if(!r.binary?.data) throw new Error('Source bytes missing'); const b=await this.helpers.getBinaryDataBuffer(0,'data'); if(b.length>10485760) throw new Error('Document exceeds 10 MiB'); body={data:b.toString('base64')}; }\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "fddc5e14-2606-5e34-81b9-b7e7696d7d96",
+        "name": "AimFin · Drive · PDF Upload",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1480,
+          640
+        ],
+        "parameters": {
+          "authentication": "oAuth2",
+          "resource": "file",
+          "operation": "update",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.file_id }}",
+            "mode": "id"
+          },
+          "changeFileContent": true,
+          "inputDataFieldName": "data",
+          "newUpdatedFileName": "",
+          "options": {
+            "fields": [
+              "id"
+            ]
+          }
+        },
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": null,
+            "name": "AIMFIN_GOOGLE_DRIVE_OAUTH"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "6b4bd5c2-2106-5ef3-b6fa-ca6a10d9f997",
+        "name": "AimFin · Drive · PDF Bytes",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1220,
+          640
+        ],
+        "parameters": {
+          "jsCode": "const b=Buffer.from($json.body.data,'base64'); if(b.subarray(0,5).toString()!=='%PDF-') throw new Error('Invalid PDF'); return [{json:$json,binary:{data:await this.helpers.prepareBinaryData(b,'report.pdf','application/pdf')}}];"
+        }
+      },
+      {
+        "id": "09625067-3efb-5cc1-a33f-0496ea13a656",
+        "name": "AimFin · Drive · Normalize PDF",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          640
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Drive · Claim').first().json;\nconst r=$input.first();\nif(r.json.error) throw new Error('Native error reached success lane');\nlet status=200;\nlet body=r.json;\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "a09fefcc-29fa-5ba3-a950-78a9e6d3446f",
+        "name": "AimFin · Drive · Transport Failure",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1900,
+          980
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Drive · Claim').first().json;\nconst e=$json.error ?? $json;\nconst raw=e?.httpCode ?? e?.statusCode ?? e?.status ?? e?.context?.httpCode;\nlet status=/^[1-5][0-9]{2}$/.test(String(raw)) ? Number(raw) : 0;\nconst message=typeof e==='string' ? e : String(e?.message || '');\n// Older native Sheets returns only n8n's canonical error message. Unknown stays ambiguous.\nif(!status && /^Authorization failed - please check your credentials/.test(message)) status=401;\nif(!status && /^Forbidden - perhaps check your credentials/.test(message)) status=403;\nif(!status && /^The service is receiving too many requests from you/.test(message)) status=429;\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body:{transport_error:true}}}];"
+        }
+      },
+      {
+        "id": "16b142d2-3625-57b4-8498-ba119108d704",
+        "name": "AimFin · Drive · Persist Result",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2580,
+          320
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/result",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ $json }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "c4eb3913-b6c5-5a9d-b843-5399405fdc4b",
+        "name": "Guide · Claim and guard",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          20
+        ],
+        "parameters": {
+          "content": "## CLAIM + GUARD\nLease one durable operation. An idle queue ends this tick safely.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "c7f32acc-39cf-5163-9ba8-40d4634caf41",
+        "name": "Guide · Provider modes",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1220,
+          -220
+        ],
+        "parameters": {
+          "content": "## DRIVE OPERATIONS\nMetadata / native source download / native PDF update.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "708ecaae-a481-5160-8d51-c97fbcf48b14",
+        "name": "Guide · Transport recovery",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1840,
+          1180
+        ],
+        "parameters": {
+          "content": "## TRANSPORT RECOVERY\nUnknown outcomes return to the core for controlled reconciliation.",
+          "height": 140,
+          "width": 440,
+          "color": 3
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Drive · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Claim",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Claim": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Provider Guard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Provider Guard": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Request Mode",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Request Mode": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · JSON Request",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Drive · Download",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Drive · PDF Bytes",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · JSON Request": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Normalize JSON",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Drive · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Normalize JSON": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Download": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Normalize Download",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Drive · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Normalize Download": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · PDF Bytes": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · PDF Upload",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · PDF Upload": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Normalize PDF",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Drive · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Normalize PDF": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Drive · Transport Failure": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Drive · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "9baea75e91b9f273",
+    "name": "AimFin · Worker · Gmail",
+    "active": false,
+    "nodes": [
+      {
+        "id": "94f6af4e-9955-5485-b61e-6a623bb7c872",
+        "name": "AimFin · Gmail · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          160
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 2
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3c8bf21c-3893-5fb1-8539-954570c39f20",
+        "name": "AimFin · Gmail · Claim",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          340,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/claim/gmail",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "af8feee5-4acb-5a86-b1c5-790b9d2a2ecf",
+        "name": "AimFin · Gmail · Provider Guard",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          160
+        ],
+        "parameters": {
+          "jsCode": "if ($json.idle) return [];\nconst o={...$json};\nconst origin=\"https://gmail.googleapis.com\";\nif(typeof o.url!=='string' || /[\\s\\\\\\\\]/.test(o.url) || !o.url.startsWith(origin+'/') || o.url.includes('#')) throw new Error('Provider destination denied');\nif(!o.operation_id || !o.lease) throw new Error('Operation identity missing');\nconst path=o.url.slice(origin.length);\nif(o.binary || o.upload_pdf || !(o.method==='POST' && o.url===origin+'/gmail/v1/users/me/messages/send' && typeof o.body?.raw==='string' || o.method==='GET' && /^\\/gmail\\/v1\\/users\\/me\\/messages(?:\\?[A-Za-z0-9%=&_-]+|\\/[A-Za-z0-9_-]+\\?format=raw)$/.test(path))) throw new Error('Gmail contract denied');\nreturn [{json:o}];"
+        }
+      },
+      {
+        "id": "7b20029a-7265-566a-93f2-159e82829b44",
+        "name": "AimFin · Gmail · JSON Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1020,
+          160
+        ],
+        "parameters": {
+          "method": "={{ $json.method }}",
+          "url": "={{ $json.url }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "gmailOAuth2",
+          "options": {
+            "timeout": 90000,
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            },
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "sendBody": "={{ $json.body !== null && $json.body !== undefined }}",
+          "specifyBody": "json",
+          "jsonBody": "={{ $json.body || {} }}"
+        },
+        "credentials": {
+          "gmailOAuth2": {
+            "id": null,
+            "name": "AIMFIN_GMAIL_OAUTH"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "017ec8d1-7dab-5f19-8fa1-5cdeb4d4fac7",
+        "name": "AimFin · Gmail · Normalize JSON",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1440,
+          160
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Gmail · Claim').first().json;\nconst r=$input.first();\nlet status=Number(r.json.statusCode || 0);\nlet body=r.json.body ?? r.json;\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "a09fefcc-29fa-5ba3-a950-78a9e6d3446f",
+        "name": "AimFin · Gmail · Transport Failure",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1440,
+          480
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · Gmail · Claim').first().json;\nconst e=$json.error ?? $json;\nconst raw=e?.httpCode ?? e?.statusCode ?? e?.status ?? e?.context?.httpCode;\nlet status=/^[1-5][0-9]{2}$/.test(String(raw)) ? Number(raw) : 0;\nconst message=typeof e==='string' ? e : String(e?.message || '');\n// Older native Sheets returns only n8n's canonical error message. Unknown stays ambiguous.\nif(!status && /^Authorization failed - please check your credentials/.test(message)) status=401;\nif(!status && /^Forbidden - perhaps check your credentials/.test(message)) status=403;\nif(!status && /^The service is receiving too many requests from you/.test(message)) status=429;\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body:{transport_error:true}}}];"
+        }
+      },
+      {
+        "id": "16b142d2-3625-57b4-8498-ba119108d704",
+        "name": "AimFin · Gmail · Persist Result",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1900,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/result",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ $json }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "579d1c85-fe75-5b63-bb60-95ef77c9e5cc",
+        "name": "Guide · Claim and guard",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          -110
+        ],
+        "parameters": {
+          "content": "## CLAIM + GUARD\nOne leased operation per tick. Idle queues stop safely.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "cd17fe28-cdd1-5ff3-a078-888e67b2cb52",
+        "name": "Guide · Transport recovery",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1400,
+          700
+        ],
+        "parameters": {
+          "content": "## RECOVERY\nThe core decides retries; unknown sends are held.",
+          "height": 140,
+          "width": 480,
+          "color": 3
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Gmail · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Gmail · Claim",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Gmail · Claim": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Gmail · Provider Guard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Gmail · Provider Guard": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Gmail · JSON Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Gmail · JSON Request": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Gmail · Normalize JSON",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · Gmail · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Gmail · Normalize JSON": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Gmail · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · Gmail · Transport Failure": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Gmail · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "ed7b650fc856bca1",
+    "name": "AimFin · Worker · WAHA",
+    "active": false,
+    "nodes": [
+      {
+        "id": "94f6af4e-9955-5485-b61e-6a623bb7c872",
+        "name": "AimFin · WAHA · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          320
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 2
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3c8bf21c-3893-5fb1-8539-954570c39f20",
+        "name": "AimFin · WAHA · Claim",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          340,
+          320
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/claim/waha",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "af8feee5-4acb-5a86-b1c5-790b9d2a2ecf",
+        "name": "AimFin · WAHA · Provider Guard",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          320
+        ],
+        "parameters": {
+          "jsCode": "if ($json.idle) return [];\nconst o={...$json};\nconst origin=\"http://waha:3000\";\nif(typeof o.url!=='string' || /[\\s\\\\\\\\]/.test(o.url) || !o.url.startsWith(origin+'/') || o.url.includes('#')) throw new Error('Provider destination denied');\nif(!o.operation_id || !o.lease) throw new Error('Operation identity missing');\nconst path=o.url.slice(origin.length);\nif(o.upload_pdf) throw new Error('WAHA binary upload denied');\nif(o.binary){ if(o.method!=='GET' || !/^\\/api\\/files\\//.test(path)) throw new Error('WAHA source denied'); }\nelse if(o.method!=='POST' || !['/api/sendText','/api/sendFile'].includes(path) || typeof o.body?.session!=='string' || !/^[0-9]{7,16}@c\\.us$/.test(o.body?.chatId || '')) throw new Error('WAHA send denied');\nelse if(path==='/api/sendFile' && (o.body.file?.mimetype!=='application/pdf' || typeof o.body.file?.data!=='string' || o.body.file?.url!==undefined)) throw new Error('WAHA PDF contract denied');\nreturn [{json:o}];"
+        }
+      },
+      {
+        "id": "602753ef-8334-5cd0-acfd-2fd7fc13029b",
+        "name": "AimFin · WAHA · Request Mode",
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          1020,
+          320
+        ],
+        "parameters": {
+          "mode": "expression",
+          "numberOutputs": 3,
+          "output": "={{ $json.binary ? 1 : ($json.url.endsWith('/api/sendFile') ? 2 : 0) }}"
+        }
+      },
+      {
+        "id": "7b20029a-7265-566a-93f2-159e82829b44",
+        "name": "AimFin · WAHA · JSON Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1480,
+          0
+        ],
+        "parameters": {
+          "method": "={{ $json.method }}",
+          "url": "={{ $json.url }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": {
+            "timeout": 90000,
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            },
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "sendBody": "={{ $json.body !== null && $json.body !== undefined }}",
+          "specifyBody": "json",
+          "jsonBody": "={{ $json.body || {} }}"
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_WAHA_CREDENTIAL"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "017ec8d1-7dab-5f19-8fa1-5cdeb4d4fac7",
+        "name": "AimFin · WAHA · Normalize JSON",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          0
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · WAHA · Claim').first().json;\nconst r=$input.first();\nlet status=Number(r.json.statusCode || 0);\nlet body=r.json.body ?? r.json;\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "9f2df8f1-01fd-5340-a4ec-4533ad30edc1",
+        "name": "AimFin · WAHA · Download",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1480,
+          320
+        ],
+        "parameters": {
+          "method": "={{ $json.method }}",
+          "url": "={{ $json.url }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": {
+            "timeout": 90000,
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            },
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_WAHA_CREDENTIAL"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "8d03d9e9-ae80-595e-99d9-fee6a9f9b89c",
+        "name": "AimFin · WAHA · Normalize Download",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          320
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · WAHA · Claim').first().json;\nconst r=$input.first();\nlet status=Number(r.json.statusCode || 0);\nlet body=r.json.body ?? r.json;\nif(status>=200 && status<300){ if(!r.binary?.data) throw new Error('Source bytes missing'); const b=await this.helpers.getBinaryDataBuffer(0,'data'); if(b.length>10485760) throw new Error('Document exceeds 10 MiB'); body={data:b.toString('base64')}; }\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "cba805ba-51be-50d9-91f2-e3c8a8ab6cd6",
+        "name": "AimFin · WAHA · Send PDF",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1480,
+          640
+        ],
+        "parameters": {
+          "method": "={{ $json.method }}",
+          "url": "={{ $json.url }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": {
+            "timeout": 90000,
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            },
+            "response": {
+              "response": {
+                "fullResponse": true,
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "sendBody": "={{ $json.body !== null && $json.body !== undefined }}",
+          "specifyBody": "json",
+          "jsonBody": "={{ $json.body || {} }}"
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_WAHA_CREDENTIAL"
+          }
+        },
+        "onError": "continueErrorOutput",
+        "retryOnFail": false
+      },
+      {
+        "id": "09625067-3efb-5cc1-a33f-0496ea13a656",
+        "name": "AimFin · WAHA · Normalize PDF",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2020,
+          640
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · WAHA · Claim').first().json;\nconst r=$input.first();\nlet status=Number(r.json.statusCode || 0);\nlet body=r.json.body ?? r.json;\nif(!body || typeof body!=='object' || Array.isArray(body)) body={response_type:typeof body};\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body}}];"
+        }
+      },
+      {
+        "id": "a09fefcc-29fa-5ba3-a950-78a9e6d3446f",
+        "name": "AimFin · WAHA · Transport Failure",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1900,
+          980
+        ],
+        "parameters": {
+          "jsCode": "const o=$('AimFin · WAHA · Claim').first().json;\nconst e=$json.error ?? $json;\nconst raw=e?.httpCode ?? e?.statusCode ?? e?.status ?? e?.context?.httpCode;\nlet status=/^[1-5][0-9]{2}$/.test(String(raw)) ? Number(raw) : 0;\nconst message=typeof e==='string' ? e : String(e?.message || '');\n// Older native Sheets returns only n8n's canonical error message. Unknown stays ambiguous.\nif(!status && /^Authorization failed - please check your credentials/.test(message)) status=401;\nif(!status && /^Forbidden - perhaps check your credentials/.test(message)) status=403;\nif(!status && /^The service is receiving too many requests from you/.test(message)) status=429;\nreturn [{json:{operation_id:o.operation_id,lease:o.lease,status,body:{transport_error:true}}}];"
+        }
+      },
+      {
+        "id": "16b142d2-3625-57b4-8498-ba119108d704",
+        "name": "AimFin · WAHA · Persist Result",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2580,
+          320
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/operations/result",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ $json }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      },
+      {
+        "id": "5ca2f1be-157b-56c4-b839-aa4c8582eb86",
+        "name": "Guide · Claim and guard",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          20
+        ],
+        "parameters": {
+          "content": "## CLAIM + GUARD\nLease one durable operation. An idle queue ends this tick safely.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "7570469a-406f-5672-85a0-66818d7097e0",
+        "name": "Guide · Provider modes",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1220,
+          -220
+        ],
+        "parameters": {
+          "content": "## WHATSAPP OPERATIONS\nText / source download / actual PDF media delivery.",
+          "height": 140,
+          "width": 540,
+          "color": 5
+        }
+      },
+      {
+        "id": "2f31f76d-b366-547e-afcd-b7496f42efc6",
+        "name": "Guide · Transport recovery",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1840,
+          1180
+        ],
+        "parameters": {
+          "content": "## TRANSPORT RECOVERY\nUnknown outcomes return to the core for controlled reconciliation.",
+          "height": 140,
+          "width": 440,
+          "color": 3
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · WAHA · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Claim",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Claim": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Provider Guard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Provider Guard": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Request Mode",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Request Mode": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · JSON Request",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · WAHA · Download",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · WAHA · Send PDF",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · JSON Request": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Normalize JSON",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · WAHA · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Normalize JSON": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Download": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Normalize Download",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · WAHA · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Normalize Download": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Send PDF": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Normalize PDF",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "AimFin · WAHA · Transport Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Normalize PDF": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AimFin · WAHA · Transport Failure": {
+        "main": [
+          [
+            {
+              "node": "AimFin · WAHA · Persist Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "777b24a88b77ec22",
+    "name": "AimFin · Watchdog",
+    "active": false,
+    "nodes": [
+      {
+        "id": "c08b6853-e73e-5ca0-a465-ce182772cbeb",
+        "name": "AimFin · Watchdog · Clock",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          160
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "seconds",
+                "secondsInterval": 15
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "0cac6570-abd0-5d88-8b40-b6e6b48952da",
+        "name": "AimFin · Watchdog · Reconcile State",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          440,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/watchdog",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {} }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Watchdog · Clock": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Watchdog · Reconcile State",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240,
+      "errorWorkflow": "4f8a39c112cc304f"
+    },
+    "pinData": {},
+    "tags": []
+  },
+  {
+    "id": "4f8a39c112cc304f",
+    "name": "AimFin · Error Handler",
+    "active": false,
+    "nodes": [
+      {
+        "id": "928ed3da-3233-5e71-95eb-426b8392cd94",
+        "name": "AimFin · Errors · Trigger",
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          160
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "bd256817-37eb-53fb-80cd-45260ad9b522",
+        "name": "AimFin · Errors · Persist Alert",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          440,
+          160
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "http://core:8080/v1/n8n-error",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { execution_id: $json.execution?.id || '' } }}",
+          "options": {
+            "timeout": 180000
+          }
+        },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": null,
+            "name": "AIMFIN_CORE_CREDENTIAL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "AimFin · Errors · Trigger": {
+        "main": [
+          [
+            {
+              "node": "AimFin · Errors · Persist Alert",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "none",
+      "saveDataErrorExecution": "none",
+      "saveManualExecutions": false,
+      "executionTimeout": 240
+    },
+    "pinData": {},
+    "tags": []
+  }
+]
